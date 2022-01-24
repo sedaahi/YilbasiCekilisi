@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-image: url("./resim2.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            text-align: center;
+            color: white;
+        }
+        .talihli{
+            background-color: red;
+            font-size: 2em;
+            transition: font-size 1s;
+            display: inline-block;
+            color: white;
+            border-radius: 10%;
+            padding: 10px;
+            margin: 10px;
+        }
+        ul{
+            list-style: none;
+            padding: 0px;
+            text-align: center;
+            list-style-position:inside ;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Yılbaşı Çekilişi</h1>
+    <p>inputtan yazılan kişi adı sayfada bir listede listenilir.Butona tıklandığında ise çekilişi kazanan
+        belirlenir.Listedeki elemanlardan birine çift tıklandığından o elemanı siliniz.</p>
+    <input id="kisiAd" type="text">
+    <button id="btnEkle">Ekle</button>
+    <ul id="kisiler">
+    </ul>
+    <button id="btnCekilisYap">Çekiliş Yap</button>
+
+    <script>
+        let kisiListesi = [];
+        let talihliIndex = 0;
+        let btnEkle = document.getElementById("btnEkle");
+        let inputKisiAd = document.getElementById("kisiAd");
+        let kisiler = document.getElementById("kisiler");
+        let btnCekilisYap = document.getElementById("btnCekilisYap");
+        
+        btnEkle.onclick = function () {
+            let kisi = inputKisiAd.value;
+            inputKisiAd.value = "";
+            kisiListesi.push(kisi);
+            listele();
+        };
+
+        btnCekilisYap.onclick = function(){
+            let talihli = document.getElementById(talihliIndex);
+            talihli.classList.remove("talihli");        
+            talihliIndex = Math.floor(Math.random() * kisiListesi.length);
+            talihli = document.getElementById(talihliIndex);
+            talihli.classList.add("talihli");        
+        };
+
+        function listele() {
+            kisiler.innerHTML = "";
+            for (let i = 0; i < kisiListesi.length; i++) {
+                kisiler.innerHTML += `<li id="${i}" ondblclick="sil(this)">${i+1}.Kişi ${kisiListesi[i]}</li>`;
+            }
+        };
+
+        function sil(li) {
+            kisiListesi.splice(li.id, 1);
+            listele();
+        };
+    </script>
+</body>
+
+</html>
